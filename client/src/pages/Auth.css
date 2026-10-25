@@ -1,0 +1,437 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+/* Full-bleed: neutralise Vite's default #root / body layout while an auth page is mounted */
+html {
+  margin: 0;
+}
+body:has(.auth) {
+  display: block;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  background: #eef4fd;
+}
+#root:has(.auth) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: initial;
+}
+
+.auth {
+  --ink: #3b0d0d;
+  --maroon: #8f0000;
+  --beige: #fff2d8; /* card colour */
+  --field: #fffaf0; /* input colour */
+  --blue: #8fb0ea;
+  --sq: clamp(34px, 4.4vw, 64px); /* gingham square size */
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: "Poppins", system-ui, sans-serif;
+  color: var(--ink);
+  background: #eef4fd;
+  overflow-x: hidden;
+}
+
+/* ================= picnic blanket + breeze (fixed, so it stays while the card scrolls) ================= */
+
+.auth__sheet {
+  position: fixed;
+  inset: -8%;
+  z-index: -4;
+  background-color: #eef4fd;
+  background-image:
+    linear-gradient(90deg, rgba(143, 176, 234, 0.5) 50%, transparent 50%),
+    linear-gradient(rgba(143, 176, 234, 0.5) 50%, transparent 50%);
+  background-size: calc(var(--sq) * 2) calc(var(--sq) * 2);
+  animation: authSway 13s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes authSway {
+  0% {
+    transform: translate3d(0, 0, 0) skewX(0deg) skewY(0deg) scale(1.02);
+  }
+  50% {
+    transform: translate3d(-1.4%, 0.9%, 0) skewX(-1.4deg) skewY(0.5deg) scale(1.035);
+  }
+  100% {
+    transform: translate3d(1%, -0.7%, 0) skewX(1deg) skewY(-0.6deg) scale(1.02);
+  }
+}
+
+.auth__breeze {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 260% 100%;
+}
+
+.auth__breeze--a {
+  background-image: linear-gradient(
+    105deg,
+    transparent 22%,
+    rgba(255, 255, 255, 0.55) 34%,
+    transparent 46%,
+    rgba(255, 255, 255, 0.3) 66%,
+    transparent 78%
+  );
+  animation: authRollA 10s ease-in-out infinite;
+}
+
+.auth__breeze--b {
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(120, 155, 220, 0.2) 42%,
+    transparent 54%,
+    rgba(255, 255, 255, 0.35) 72%,
+    transparent 84%
+  );
+  animation: authRollB 15s ease-in-out infinite;
+}
+
+@keyframes authRollA {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+@keyframes authRollB {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.auth__glow {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 40% 50% at 50% 50%,
+    rgba(255, 252, 244, 0.6),
+    transparent 70%
+  );
+}
+
+/* ================= floating decorations (blown about by the same breeze) ================= */
+
+.fl {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.fl__art {
+  animation: breezeDrift var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+  will-change: transform;
+}
+
+.fl__art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes breezeDrift {
+  from {
+    transform: translate3d(calc(var(--dx) * -1), -7px, 0) rotate(calc(var(--tilt) - 5deg));
+  }
+  50% {
+    transform: translate3d(calc(var(--dx) * 0.2), 3px, 0) rotate(calc(var(--tilt) + 1deg));
+  }
+  to {
+    transform: translate3d(var(--dx), 9px, 0) rotate(calc(var(--tilt) + 6deg));
+  }
+}
+
+/* ================= card ================= */
+
+.auth__center {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 6vh, 64px) 16px;
+  box-sizing: border-box;
+}
+
+/* wrapper pops in once; the inner card handles hover (so the hover target never moves) */
+.card-wrap {
+  width: min(100%, clamp(330px, 32vw, 520px));
+  animation: cardIn 0.8s cubic-bezier(0.34, 1.5, 0.5, 1) both;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.auth .card {
+  box-sizing: border-box;
+  background: var(--beige);
+  border: 3px solid var(--ink);
+  border-radius: clamp(26px, 2.4vw, 38px);
+  box-shadow: 8px 10px 0 var(--ink);
+  padding: clamp(1.4rem, 2.6vw, 2.6rem);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (hover: hover) {
+  .card-wrap:hover .card {
+    transform: translateY(-4px);
+    animation: cardBounce 0.7s cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+}
+
+@keyframes cardBounce {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+  25% {
+    transform: translateY(-11px) scale(0.985, 1.02);
+  }
+  50% {
+    transform: translateY(2px) scale(1.012, 0.988);
+  }
+  72% {
+    transform: translateY(-7px) scale(0.996, 1.006);
+  }
+  100% {
+    transform: translateY(-4px) scale(1, 1);
+  }
+}
+
+.card__title {
+  margin: 0;
+  font-size: clamp(1.7rem, 2.3vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--maroon);
+}
+
+.card__sub {
+  margin: 0.5em 0 0;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+/* ================= form ================= */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.6vh, 1rem);
+  margin-top: clamp(1rem, 2.6vh, 1.6rem);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field label {
+  font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+  font-weight: 700;
+}
+
+.field input,
+.field select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: clamp(0.6rem, 1.5vh, 0.85rem) 1rem;
+  font: 500 clamp(0.9rem, 1vw, 1rem) "Poppins", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--field);
+  border: 2.5px solid var(--ink);
+  border-radius: 16px;
+  outline: none;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.field input::placeholder {
+  color: #a08c70;
+  font-weight: 400;
+}
+
+.field input:hover,
+.field select:hover {
+  transform: translateY(-1px);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--maroon);
+  box-shadow: 0 0 0 4px rgba(143, 176, 234, 0.65);
+}
+
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.6rem;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b0d0d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+.hint {
+  font-size: clamp(0.72rem, 0.82vw, 0.85rem);
+  opacity: 0.7;
+}
+
+.alert {
+  margin: 0;
+  padding: 0.7em 1em;
+  font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+  font-weight: 700;
+  color: var(--maroon);
+  background: #fbcfcf;
+  border: 2px solid var(--maroon);
+  border-radius: 14px;
+  animation: shake 0.45s ease both;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+/* ================= button: smooth press-in ================= */
+
+.btn {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: clamp(0.3rem, 1vh, 0.6rem);
+  padding: clamp(0.75rem, 1.8vh, 1rem) 1rem;
+  font: 700 clamp(1rem, 1.15vw, 1.15rem) "Poppins", system-ui, sans-serif;
+  color: var(--beige);
+  background: var(--maroon);
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 5px 6px 0 var(--ink);
+  cursor: pointer;
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.8, 0.3, 1),
+    box-shadow 0.16s cubic-bezier(0.2, 0.8, 0.3, 1),
+    opacity 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translate(-1px, -2px);
+  box-shadow: 6px 8px 0 var(--ink);
+}
+
+.btn:active:not(:disabled) {
+  transform: translate(5px, 6px);
+  box-shadow: 0 0 0 var(--ink);
+  transition-duration: 0.07s;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+/* ================= footer link ================= */
+
+.auth-switch {
+  margin: clamp(0.9rem, 2vh, 1.3rem) 0 0;
+  text-align: center;
+  font-size: clamp(0.82rem, 0.95vw, 1rem);
+}
+
+.auth-switch a {
+  font-weight: 700;
+  color: var(--maroon);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s ease;
+}
+
+.auth-switch a:hover {
+  opacity: 0.75;
+}
+
+.auth-switch a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ================= small screens ================= */
+
+@media (max-width: 640px) {
+  .auth .card {
+    box-shadow: 6px 8px 0 var(--ink);
+  }
+  .fl {
+    opacity: 0.85;
+  }
+}
+
+/* ================= reduced motion ================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .auth__sheet,
+  .auth__breeze,
+  .fl__art,
+  .card-wrap,
+  .alert,
+  .card-wrap:hover .card {
+    animation: none !important;
+  }
+  .card,
+  .btn,
+  .field input,
+  .field select {
+    transition-duration: 0.01s !important;
+  }
+}

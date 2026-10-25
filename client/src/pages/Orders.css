@@ -1,0 +1,134 @@
+.orders {
+  --ink: #3b0d0d;
+  --maroon: #8f0000;
+  --beige: #fff2d8;
+  --soft: #fbe5b8;
+  --tan: #f5d08f;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.1rem, 2vw, 1.8rem);
+}
+
+.orders__msg {
+  margin: 1rem 0;
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  color: #3b0d0d;
+}
+
+.orders__msg a {
+  color: #8f0000;
+  font-weight: 700;
+}
+
+.order {
+  padding: clamp(1rem, 1.8vw, 1.7rem) clamp(1rem, 2vw, 1.9rem);
+  background: var(--beige);
+  border: 3px solid var(--ink);
+  border-radius: clamp(18px, 1.6vw, 26px);
+  box-shadow: 4px 6px 0 var(--ink);
+  color: var(--ink);
+}
+
+.order__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem clamp(0.6rem, 1vw, 1rem);
+  padding-bottom: clamp(0.7rem, 1.2vw, 1.1rem);
+  border-bottom: 2px dashed var(--ink);
+}
+
+.order__id {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.order__date {
+  font-size: clamp(0.74rem, 0.85vw, 0.88rem);
+  color: var(--ink);
+  opacity: 0.75;
+}
+
+.order__total {
+  margin-left: auto;
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  font-weight: 800;
+  color: var(--maroon);
+}
+
+/* status pill: the text carries the meaning, the colour only backs it up */
+.status {
+  align-self: center;
+  padding: 0.2em 0.85em;
+  font-size: clamp(0.72rem, 0.85vw, 0.88rem);
+  font-weight: 700;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+}
+
+.status.is-pending {
+  background: var(--soft);
+}
+
+.status.is-transit {
+  background: var(--tan);
+}
+
+.status.is-delivered {
+  background: #d9efd8;
+}
+
+.order__lines {
+  list-style: none;
+  margin: 0;
+  padding: clamp(0.7rem, 1.2vw, 1.1rem) 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.order__lines li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: clamp(0.88rem, 1vw, 1rem);
+  color: var(--ink);
+}
+
+.order__lines .order__fee {
+  opacity: 0.7;
+}
+
+.order__ship {
+  padding: 0.8rem 1rem;
+  background: var(--soft);
+  border: 2.5px solid var(--ink);
+  border-radius: 12px;
+  font-size: clamp(0.8rem, 0.92vw, 0.95rem);
+  color: var(--ink);
+}
+
+.order__ship p {
+  margin: 0;
+}
+
+.order__ship p + p {
+  margin-top: 0.15rem;
+}
+
+.order__ship strong {
+  color: var(--maroon);
+}
+
+@media (max-width: 520px) {
+  .order__total {
+    margin-left: 0;
+    order: 3;
+    width: 100%;
+  }
+}

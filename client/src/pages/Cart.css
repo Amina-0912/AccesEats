@@ -1,0 +1,324 @@
+.cart {
+  --ink: #3b0d0d;
+  --maroon: #8f0000;
+  --beige: #fff2d8;
+  --soft: #fbe5b8;
+  --tan: #f5d08f;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 2.6vw, 2.6rem);
+  align-items: start;
+}
+
+.cart ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+
+/* ---- one cart line ---- */
+.line {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: clamp(0.6rem, 1.4vw, 1.4rem);
+  padding: clamp(0.7rem, 1.2vw, 1.1rem);
+  background: var(--beige);
+  border: 3px solid var(--ink);
+  border-radius: clamp(18px, 1.6vw, 26px);
+  box-shadow: 4px 6px 0 var(--ink);
+}
+
+.line__art {
+  display: grid;
+  place-items: center;
+  width: clamp(52px, 5vw, 78px);
+  aspect-ratio: 1;
+  background: var(--soft);
+  border: 2.5px solid var(--ink);
+  border-radius: clamp(12px, 1.1vw, 18px);
+}
+
+.line__icon {
+  width: 62%;
+}
+
+.line__name {
+  margin: 0;
+  font-size: clamp(1rem, 1.25vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.line__each {
+  margin: 0.15rem 0 0;
+  font-size: clamp(0.78rem, 0.9vw, 0.92rem);
+  color: var(--ink);
+  opacity: 0.75;
+}
+
+.line__total {
+  min-width: 4.6em;
+  text-align: right;
+  font-size: clamp(1rem, 1.3vw, 1.3rem);
+  font-weight: 800;
+  color: var(--maroon);
+}
+
+/* quantity stepper */
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.qty__n {
+  min-width: 1.2em;
+  text-align: center;
+  font-weight: 800;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  color: var(--ink);
+}
+
+.qty__btn {
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 2.4vw, 38px);
+  aspect-ratio: 1;
+  padding: 0;
+  font: 800 clamp(1rem, 1.3vw, 1.3rem) / 1 "Poppins", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--tan);
+  border: 2.5px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.16s cubic-bezier(0.2, 0.8, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.qty__btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.qty__btn:active:not(:disabled) {
+  transform: scale(0.9);
+  transition-duration: 0.07s;
+}
+
+.qty__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* delete */
+.bin {
+  display: grid;
+  place-items: center;
+  width: clamp(34px, 2.8vw, 44px);
+  aspect-ratio: 1;
+  padding: 0;
+  color: var(--ink);
+  background: var(--beige);
+  border: 2.5px solid var(--ink);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.8, 0.3, 1),
+    background 0.2s ease,
+    color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bin svg {
+  width: 56%;
+  height: 56%;
+}
+
+.bin:hover {
+  background: var(--maroon);
+  color: #fff8ec;
+  transform: translateY(-2px);
+}
+
+.bin:active {
+  transform: scale(0.92);
+  transition-duration: 0.07s;
+}
+
+.cart__more {
+  margin: 1.1rem 0 0;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  color: var(--ink);
+}
+
+.cart__more a {
+  color: var(--maroon);
+  font-weight: 700;
+}
+
+/* ---- right column ---- */
+.cart__side {
+  display: grid;
+  gap: clamp(1rem, 1.8vw, 1.6rem);
+}
+
+.sum {
+  padding: clamp(1rem, 1.6vw, 1.5rem);
+  background: var(--soft);
+  border: 3px solid var(--ink);
+  border-radius: clamp(18px, 1.6vw, 26px);
+  box-shadow: 4px 6px 0 var(--ink);
+  color: var(--ink);
+}
+
+.sum dl {
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px dashed var(--ink);
+}
+
+.sum dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: clamp(0.88rem, 1vw, 1rem);
+}
+
+.sum dt,
+.sum dd {
+  margin: 0;
+}
+
+.sum__total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.9rem;
+  font-size: clamp(1.2rem, 1.6vw, 1.6rem);
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.sum__total span:last-child {
+  color: var(--maroon);
+}
+
+.deliver {
+  display: grid;
+  gap: 0.5rem;
+  padding: clamp(1rem, 1.6vw, 1.5rem);
+  background: var(--beige);
+  border: 3px solid var(--ink);
+  border-radius: clamp(18px, 1.6vw, 26px);
+  box-shadow: 4px 6px 0 var(--ink);
+  color: var(--ink);
+}
+
+.deliver h2 {
+  margin: 0 0 0.3rem;
+  font-size: clamp(1.05rem, 1.3vw, 1.3rem);
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.deliver label {
+  margin-top: 0.4rem;
+  font-size: clamp(0.78rem, 0.9vw, 0.9rem);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.deliver input,
+.deliver textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.7em 0.9em;
+  font: 400 clamp(0.88rem, 1vw, 1rem) "Poppins", system-ui, sans-serif;
+  color: var(--ink);
+  background: #fffaf0;
+  border: 2.5px solid var(--ink);
+  border-radius: 12px;
+  resize: vertical;
+}
+
+.deliver input::placeholder,
+.deliver textarea::placeholder {
+  color: rgba(59, 13, 13, 0.5);
+}
+
+.deliver__alert {
+  margin: 0;
+  padding: 0.6em 0.9em;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--maroon);
+  background: #fde4df;
+  border: 2px solid var(--maroon);
+  border-radius: 12px;
+}
+
+.place {
+  margin-top: 0.9rem;
+  padding: 0.85em 1em;
+  font: 700 clamp(0.95rem, 1.15vw, 1.15rem) "Poppins", system-ui, sans-serif;
+  color: #fff8ec;
+  background: var(--maroon);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 3px 5px 0 var(--ink);
+  cursor: pointer;
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.8, 0.3, 1),
+    box-shadow 0.16s cubic-bezier(0.2, 0.8, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.place:hover:not(:disabled) {
+  transform: translate(-1px, -2px);
+  box-shadow: 4px 7px 0 var(--ink);
+}
+
+.place:active:not(:disabled) {
+  transform: translate(3px, 5px);
+  box-shadow: 0 0 0 var(--ink);
+  transition-duration: 0.07s;
+}
+
+.place:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+/* ---- narrower screens ---- */
+@media (max-width: 900px) {
+  .cart {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .line {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "art info bin"
+      "qty qty total";
+  }
+  .line__art { grid-area: art; }
+  .line__info { grid-area: info; }
+  .bin { grid-area: bin; }
+  .qty { grid-area: qty; }
+  .line__total { grid-area: total; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qty__btn,
+  .bin,
+  .place {
+    transition-duration: 0.01s !important;
+  }
+}

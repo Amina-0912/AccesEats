@@ -1,0 +1,574 @@
+.empty {
+  --ink: #3b0d0d;
+  --maroon: #8f0000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(0.5rem, 3vh, 2rem) 0 clamp(1rem, 4vh, 3rem);
+}
+
+.empty__art {
+  position: relative;
+  width: min(100%, 520px);
+  height: clamp(170px, 21vw, 260px);
+  margin-bottom: clamp(0.6rem, 2vh, 1.4rem);
+}
+
+.empty__art > span {
+  position: absolute;
+  display: block;
+}
+
+.empty__art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.empty__main {
+  left: 50%;
+  top: 0;
+  width: clamp(78px, 10vw, 128px);
+  margin-left: calc(clamp(78px, 10vw, 128px) / -2);
+  animation: emptyBob 3.6s ease-in-out infinite alternate;
+}
+
+.empty__mini {
+  right: 17%;
+  top: 28%;
+  width: clamp(34px, 4.4vw, 58px);
+  transform: rotate(8deg);
+  animation: emptyBob 4.4s ease-in-out -1.5s infinite alternate;
+}
+
+.empty__leaf {
+  left: 22%;
+  top: 6%;
+  width: clamp(18px, 2.2vw, 30px);
+  transform: rotate(-24deg);
+  animation: emptyBob 5s ease-in-out -2.5s infinite alternate;
+}
+
+@keyframes emptyBob {
+  from {
+    translate: 0 -5px;
+  }
+  to {
+    translate: 0 7px;
+  }
+}
+
+/* ================= the sad, melting ice cream ================= */
+
+.melt {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 24px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.melt:focus-visible {
+  outline: 3px solid #8fb0ea;
+  outline-offset: 6px;
+}
+
+.sad {
+  overflow: visible;
+}
+
+/* ---- one white shape, outlined only on the outside ---- */
+
+.cream--outline path {
+  fill: #3b0d0d;
+  stroke: #3b0d0d;
+  stroke-width: 10;
+  stroke-linejoin: round;
+}
+
+.cream--outline line {
+  stroke: #3b0d0d;
+  stroke-width: 18;
+  stroke-linecap: round;
+}
+
+.cream--outline circle {
+  fill: #3b0d0d;
+  stroke: none;
+}
+
+.cream--fill path {
+  fill: #fff8ec;
+  stroke: none;
+}
+
+.cream--fill line {
+  stroke: #fff8ec;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.cream--fill circle {
+  fill: #fff8ec;
+  stroke: none;
+}
+
+/* ---- resting state (these quick transitions are used when it pulls itself back together) ---- */
+
+.sad__sag {
+  transform-origin: 50px 80px;
+  transition: transform 0.7s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+
+.sad__shiver {
+  transform-origin: 50px 80px;
+}
+
+/* the melted cream waits inside the scoop, then slides down out of it */
+.sad__skirt {
+  transform-origin: 50px 60px;
+  transform: translateY(-22px) scaleX(0.85);
+  opacity: 0;
+  transition:
+    transform 0.6s ease,
+    opacity 0.4s ease 0.1s;
+}
+
+.sad__drip {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition:
+    stroke-dashoffset 0.5s ease,
+    opacity 0.3s ease 0.2s;
+}
+
+/* swelling drop tips: hidden until their drip has finished running down */
+.sad__bulge {
+  opacity: 0;
+  transform-box: fill-box;
+}
+
+.sad__bulge--fill {
+  transform-origin: 50% 0;
+}
+
+.sad__bulge--outline {
+  transform-origin: 50% 50%;
+}
+
+/* falling drops, puddle and splashes (they fade in and out together) */
+.sad__ground {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.sad__drop {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+
+.sad__pool {
+  transform-origin: 50px 147px;
+  transform: scale(0.05, 0.5);
+  opacity: 0;
+}
+
+.sad__pool-body {
+  fill: #fff8ec;
+  stroke: #3b0d0d;
+  /* same thickness as the other outlines (5 units of the drawing) */
+  stroke-width: clamp(3.9px, 0.5vw, 6.4px);
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.sad__splash {
+  fill: #fff8ec;
+  stroke: #3b0d0d;
+  stroke-width: 1.6;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+/* eyes */
+.eye {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.5s cubic-bezier(0.34, 1.6, 0.5, 1);
+}
+
+.eye__shine {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.brow {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.5s cubic-bezier(0.34, 1.6, 0.5, 1);
+}
+
+/* ---- melting state (hover, keyboard focus, or tap) ---- */
+
+/* the scoop slumps a little */
+.is-melting .sad__sag {
+  transform: scale(1.04, 0.92);
+  transition: transform 1.6s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+
+.is-melting .sad__shiver {
+  animation: meltShiver 0.45s ease-in-out infinite alternate;
+}
+
+/* 1. cream flows down out of the scoop */
+.is-melting .sad__skirt {
+  transform: none;
+  opacity: 1;
+  transition:
+    transform 1.2s cubic-bezier(0.3, 0.7, 0.3, 1) 0.1s,
+    opacity 0.35s ease 0.1s;
+}
+
+/* 2. then the drips run down, one after another */
+.is-melting .sad__drip {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  transition:
+    stroke-dashoffset 1.1s cubic-bezier(0.45, 0.1, 0.3, 1) var(--d, 0.5s),
+    opacity 0.2s linear var(--d, 0.5s);
+}
+
+/* puppy eyes */
+.is-melting .eye {
+  transform: scale(1.7);
+}
+
+.is-melting .eye__shine {
+  opacity: 1;
+}
+
+.is-melting .brow--l {
+  transform: translateY(-3px) rotate(-8deg);
+}
+
+.is-melting .brow--r {
+  transform: translateY(-3px) rotate(8deg);
+}
+
+/* 3. the drip tips swell, stretch and let go of a drop (every 2.4s, one drip after the other) */
+.is-melting .sad__bulge--fill {
+  animation: bulgeFill 2.4s infinite;
+  animation-delay: var(--delay);
+}
+
+.is-melting .sad__bulge--outline {
+  animation: bulgeOutline 2.4s infinite;
+  animation-delay: var(--delay);
+}
+
+/* 4. the drop falls and sinks into the puddle, the puddle grows, splashes start */
+.is-melting .sad__ground {
+  opacity: 1;
+  transition-duration: 0.3s;
+}
+
+.is-pooling .sad__drop {
+  animation: dropFall 2.4s infinite;
+  animation-delay: var(--delay);
+}
+
+.is-pooling .sad__pool {
+  animation: poolGrow 10.2s linear forwards;
+}
+
+.is-pooling .sad__pool-body {
+  animation: poolJiggle 1.2s ease-out infinite;
+  animation-delay: 3.6s;
+}
+
+.is-pooling .sad__splash {
+  animation: splash 2.4s ease-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes meltShiver {
+  from {
+    transform: rotate(-1deg);
+  }
+  to {
+    transform: rotate(1deg);
+  }
+}
+
+/* the tip swells and droops, lets go at 60%, then springs back */
+@keyframes bulgeFill {
+  0% {
+    opacity: 1;
+    transform: scale(1, 1);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.3, 1.55);
+    animation-timing-function: cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  66% {
+    opacity: 1;
+    transform: scale(0.92, 0.82);
+    animation-timing-function: ease-out;
+  }
+  76%,
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+/* same movement for the dark layer, sized so the outline stays the same thickness */
+@keyframes bulgeOutline {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(2.2px) scale(1.133, 1.244);
+    animation-timing-function: cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  66% {
+    opacity: 1;
+    transform: translateY(-0.72px) scale(0.964, 0.92);
+    animation-timing-function: ease-out;
+  }
+  76%,
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+/* the drop appears exactly where the tip let go, stretches as it falls, sinks into the puddle */
+@keyframes dropFall {
+  0%,
+  59.9% {
+    opacity: 0;
+    transform: translateY(0) scale(0.96, 0.67);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(0.96, 0.67);
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6);
+  }
+  78% {
+    opacity: 1;
+    transform: translateY(var(--fall)) scale(0.88, 1.1);
+  }
+  78.1%,
+  100% {
+    opacity: 0;
+    transform: translateY(var(--fall)) scale(0.88, 1.1);
+  }
+}
+
+/* the puddle pops open when the first drop lands, then grows a step with every drop (10.2s total) */
+@keyframes poolGrow {
+  0%,
+  34.5% {
+    transform: scale(0.05, 0.5);
+    opacity: 0;
+  }
+  34.6% {
+    transform: scale(0.05, 0.5);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+  39%,
+  46.3% {
+    transform: scale(0.37, 1);
+  }
+  46.4% {
+    transform: scale(0.37, 1);
+    animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+  50.8%,
+  58.1% {
+    transform: scale(0.5, 1);
+  }
+  58.2% {
+    transform: scale(0.5, 1);
+    animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+  62.5%,
+  69.9% {
+    transform: scale(0.62, 1);
+  }
+  70% {
+    transform: scale(0.62, 1);
+    animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+  74.3%,
+  81.7% {
+    transform: scale(0.74, 1);
+  }
+  81.8% {
+    transform: scale(0.74, 1);
+    animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+  86.1%,
+  93.4% {
+    transform: scale(0.86, 1);
+  }
+  93.5% {
+    transform: scale(0.86, 1);
+    animation-timing-function: cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+  97.8%,
+  100% {
+    transform: scale(0.95, 1);
+    opacity: 1;
+  }
+}
+
+/* the puddle surface wobbles each time a drop lands (one drop every 1.2s) */
+@keyframes poolJiggle {
+  0% {
+    transform: scale(1, 1);
+  }
+  8% {
+    transform: scale(1.03, 1.5);
+  }
+  22% {
+    transform: scale(0.99, 0.85);
+  }
+  38% {
+    transform: scale(1, 1.1);
+  }
+  55%,
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+/* three tiny droplets jump out of the puddle and fall back (only once it is big enough) */
+@keyframes splash {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  1% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.6);
+  }
+  8% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 2.2px), calc(var(--up) * -0.7px)) scale(1);
+  }
+  14% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 4px), calc(var(--up) * -1px)) scale(1);
+  }
+  21% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 6px), calc(var(--up) * -0.6px)) scale(1);
+  }
+  27% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 7.5px), 0) scale(0.9);
+  }
+  29%,
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--dx) * 7.5px), 1px) scale(0.4);
+  }
+}
+
+/* ================= text + button ================= */
+
+.empty__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.3vw, 2.4rem);
+  font-weight: 800;
+  color: var(--maroon);
+}
+
+.empty__sub {
+  margin: 0.5rem 0 0;
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  color: var(--ink);
+  opacity: 0.8;
+}
+
+.empty__btn {
+  margin-top: clamp(1.1rem, 3vh, 1.8rem);
+  padding: 0.8em 2.2em;
+  font: 700 clamp(0.95rem, 1.15vw, 1.15rem) "Poppins", system-ui, sans-serif;
+  color: #fff8ec;
+  text-decoration: none;
+  background: var(--maroon);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 3px 5px 0 var(--ink);
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.8, 0.3, 1),
+    box-shadow 0.16s cubic-bezier(0.2, 0.8, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.empty__btn:hover {
+  transform: translate(-1px, -2px);
+  box-shadow: 4px 7px 0 var(--ink);
+}
+
+.empty__btn:active {
+  transform: translate(3px, 5px);
+  box-shadow: 0 0 0 var(--ink);
+  transition-duration: 0.07s;
+}
+
+/* ================= reduced motion ================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .empty__main,
+  .empty__mini,
+  .empty__leaf,
+  .is-melting .sad__shiver,
+  .is-melting .sad__bulge--fill,
+  .is-melting .sad__bulge--outline,
+  .is-pooling .sad__drop,
+  .is-pooling .sad__pool,
+  .is-pooling .sad__pool-body,
+  .is-pooling .sad__splash {
+    animation: none !important;
+  }
+  .sad__sag,
+  .sad__skirt,
+  .sad__drip,
+  .sad__ground,
+  .eye,
+  .eye__shine,
+  .brow,
+  .is-melting .sad__sag,
+  .is-melting .sad__skirt,
+  .is-melting .sad__drip,
+  .empty__btn {
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+  /* no motion: just show a finished puddle */
+  .is-melting .sad__pool {
+    transform: scale(0.9, 1);
+    opacity: 1;
+  }
+}
